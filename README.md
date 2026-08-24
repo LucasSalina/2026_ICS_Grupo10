@@ -71,7 +71,7 @@
 
 ---
 
-## 🏷️ Reglas de Nomenclatura de Elementos de Configuración (CI)
+## 🏷️ Nomenclatura de los items de Configuración
 
 | Nombre del CI | Regla de Nombrado | Ubicación Física | Tipo de Item |
 | :--- | :--- | :--- | :--- |
@@ -152,7 +152,7 @@ Nos basamos en Conventional Commits:
 
 ---
 
-## 🚩 Línea Base (Baseline)
+## 🚩 Línea Base
 
 Para la conformación de las líneas bases consideramos 4 momentos:
 1. **Primera línea base:** Será la presentada en el *“Trabajo Práctico N°4: SCM - Herramientas de SCM”*.
