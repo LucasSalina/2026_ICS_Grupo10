@@ -180,3 +180,4 @@ Para la conformación de las líneas bases consideramos 4 momentos:
 | Rueda, Tomas Francisco | `@Tomru3107` |
 | Bani, Nicolás Matías | `@NiccoBa` |
 | Marinangeli, Mateo | `@mateomarinangeli` |
+| Alem, Juan | `@JuanAlem1232` |
