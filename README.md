@@ -175,7 +175,7 @@ Para la conformación de las líneas bases consideramos 4 momentos:
 | Frias, Rodrigo Iván | `@rodrfrias` |
 | Daolio Rinaldi, Franco Tomás | `@DevFrancoDaolio` |
 | Cesar, Jorge Fidel | `@JFidel17` |
-| Agustín Succar | `@agustinsuccar` |
+| Succar, Agustín | `@agustinsuccar` |
 | Juncos, Conrado Nahuel | `@ConradoJuncos` |
 | Rueda, Tomas Francisco | `@Tomru3107` |
 | Bani, Nicolás Matías | `@NiccoBa` |
