@@ -181,4 +181,5 @@ Para la conformación de las líneas bases consideramos 4 momentos:
 | Bani, Nicolás Matías | `@NiccoBa` |
 | Marinangeli, Mateo | `@mateomarinangeli` |
 | Alem, Juan | `@JuanAlem1232` |
-|Sander, Juan Ignacio| `@IgnacioSander` |
+| Sander, Juan Ignacio| `@IgnacioSander` |
+| Del Río, Joaquin| `@Joaquin121121` |
