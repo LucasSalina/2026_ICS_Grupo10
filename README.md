@@ -86,7 +86,7 @@
 | **Fotos e Imágenes** | `<<año>>-ICS_Imagen<<X>>_<<unidadX/X>>_<<tema>>_<<X>>_<<NombreDelIntegrante>>.png/jpg` | `./2026_ICS_Grupo10/<<UnidadX>>/Material_Adicional` | Producción Propia |
 | **Resumen** | `<<año>>-ICS_Resumen<<X>>_<<unidadX/X>>_<<tema>>_<<X>>_<<NombreDelIntegrante>>.pdf` | `./2026_ICS_Grupo10/<<UnidadX>>/Material_Adicional` | Producción Propia |
 | **Enlaces a contenido externos** | `<<año>>-ICS_Enlaces_Externos.txt` | `./2026_ICS_Grupo10/<<UnidadX>>/Material_Adicional` | Producción Propia |
-| **Enunciado y Lineamientos trabajo de investigación grupal** | `<<año>>-ISW_Lineamientos_trabajo_investigacion_grupal.pdf` | `./2026_ICS_Grupo10/Trabajos_Grupales/Trabajo_de_Investigacion` | Cátedra |
+| **Enunciado y Lineamientos trabajo de investigación grupal** | `<<año>>-ICS_Lineamientos_trabajo_investigacion_grupal.pdf` | `./2026_ICS_Grupo10/Trabajos_Grupales/Trabajo_de_Investigacion` | Cátedra |
 | **Enlaces a contenido externos** | `<<año>>-ICS_Enlaces_Externos_Investigacion.txt` | `./2026_ICS_Grupo10/Trabajos_Grupales/Trabajo_de_Investigacion/TIG<<X>>/Material_Adicional` | Producción Propia |
 | **Producción escrita** | `<<año>>-ICS_Produccion_Investigacion_TIG<<X>>_<<NombreDelIntegrante>>.pdf` | `./2026_ICS_Grupo10/Trabajos_Grupales/Trabajo_de_Investigacion/TIG<<X>>/Material_Adicional` | Producción Propia |
 | **Fotos e Imágenes** | `<<año>>-ICS_Imagen<<X>>_TIG<<X>>_<<NombreDelIntegrante>>.png/jpg` | `./2026_ICS_Grupo10/Trabajos_Grupales/Trabajo_de_Investigacion/TIG<<X>>/Material_Adicional` | Producción Propia |
