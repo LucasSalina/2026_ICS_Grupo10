@@ -4,7 +4,7 @@
 
 ```text
 /General
-    /Reglas_de_Juego
+    /Reglas_Del_Juego
 /Unidades
     /Unidad1
         /Bibliografia
