@@ -157,12 +157,15 @@ Nos basamos en Conventional Commits:
 Para la conformación de las líneas bases consideramos 4 momentos:
 1. **Primera línea base:** Será la presentada en el *“Trabajo Práctico N°4: SCM - Herramientas de SCM”con todos los items subidos hasta la fecha*.
 2. **Segunda línea base:** Conformada previa al primer parcial (Fecha límite: Viernes 02/10/2026). 
-    Contiene todos los elementos relacionados a:
-    Unidad 1: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imagenes" , "Resumen" , "Enlaces a contenido externos".
-    Unidad 2: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imagenes" , "Resumen" , "Enlaces a contenido externos" correspondientes a los temas Gestión de Producto , Requerimientos Ágiles, User Stories, Estimaciones Ágiles, Framework Scrum.
-    Unidad 3: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imagenes" , "Resumen" , "Enlaces a contenido externos" correspondietes al tema Software Control Management. 
-    Contenido para el Parcial 1: "Material de Apoyo para rendir parciales", "Templates de Parciales" y "Produccion escrita". 
-    Todos los elementos deben estar en sus carpetas correspondientes, con los nombres correctos y sin modificaciones o correcciones pendientes.
+    Contiene todos los elementos relacionados a: 
+
+    **Unidad 1**: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imágenes" , "Resumen" , "Enlaces a contenido externos". 
+
+    **Unidad 2**: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imágenes" , "Resumen" , "Enlaces a contenido externos" correspondientes a los temas Gestión de Producto , Requerimientos Ágiles, User Stories, Estimaciones Ágiles, Framework Scrum. 
+
+    **Unidad 3**: incluye "Material Bibliográfico de la cátedra" , "Filmina" , "Filminas con anotaciones" , "Fotos e Imágenes" , "Resumen" , "Enlaces a contenido externos" correspondientes al tema Software Control Management. 
+
+    **Contenido para el Parcial 1**: "Material de Apoyo para rendir parciales", "Templates de Parciales" y "Producción escrita". Todos los elementos deben estar en sus carpetas correspondientes, con los nombres correctos y sin modificaciones o correcciones pendientes.
 3. **Tercera línea base:** Conformada previa al segundo parcial (Fecha límite: Viernes 30/10/2026).
 4. **Cuarta línea base:** Conformada para la presentación del *“Trabajo Práctico N°5: SCM - Uso de Repositorio”*.
 
