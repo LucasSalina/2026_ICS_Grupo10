@@ -42,3 +42,12 @@ def test_brevo_dirige_el_correo_al_destinatario(api_brevo: MagicMock) -> None:
     enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
 
     assert datos_enviados_a_brevo(api_brevo)["to"] == [{"email": "ana@ejemplo.com"}]
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_recibe_los_datos_como_json(api_brevo: MagicMock) -> None:
+    """Declara el formato JSON que exige la API de Brevo."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    solicitud = api_brevo.call_args[0][0]
+    assert solicitud.get_header("Content-type") == "application/json"
