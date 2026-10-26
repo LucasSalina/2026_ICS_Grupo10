@@ -119,3 +119,13 @@ def test_brevo_avisa_que_el_qr_va_adjunto(api_brevo: MagicMock) -> None:
     cuerpo = datos_enviados_a_brevo(api_brevo)["htmlContent"]
     assert "Tu código QR va adjunto en este correo." in cuerpo
     assert "cid:" not in cuerpo
+
+
+def test_sin_clave_de_brevo_no_usa_su_api(
+    api_brevo: MagicMock, servidor_smtp: MagicMock
+) -> None:
+    """Mantiene el envío por SMTP cuando no hay clave de Brevo configurada."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    api_brevo.assert_not_called()
+    servidor_smtp.send_message.assert_called_once()
