@@ -14,8 +14,8 @@ python -m pip install -r requirements-dev.txt
 python -m pip check
 ```
 
-`requirements.txt` contiene Django, Segno y las dependencias transitivas de
-ejecucion. `requirements-dev.txt` incluye ese archivo y agrega pytest,
+`requirements.txt` contiene Django, Segno, gunicorn, whitenoise y las
+dependencias transitivas de ejecucion. `requirements-dev.txt` incluye ese archivo y agrega pytest,
 pytest-django, Black, Ruff y mypy con sus dependencias. Para instalar solamente
 lo necesario para ejecutar la aplicacion, usar `-r requirements.txt`.
 No se necesita instalar paquetes globales ni usar `--break-system-packages`.
@@ -64,3 +64,35 @@ requirements no instalan ni inician ese servidor. Sin servidor, la inscripcion s
 y el error de envio aparece en la terminal de `runserver`. Para ver los correos
 durante una demostracion se puede iniciar un servidor SMTP local de pruebas en
 ese puerto, por ejemplo Mailpit (interfaz web en <http://127.0.0.1:8025/>).
+
+## Envio de correos con Brevo
+
+Si la variable de entorno `BREVO_API_KEY` tiene una clave, el correo se envia
+por la API HTTP de Brevo en lugar de SMTP. `CORREO_REMITENTE` debe ser una
+direccion verificada como remitente en esa cuenta de Brevo. Brevo no admite
+imagenes incrustadas, por lo que el QR viaja como adjunto `qr.png`.
+
+```bash
+export BREVO_API_KEY="<clave de Brevo>"
+export CORREO_REMITENTE="<remitente verificado>"
+python manage.py runserver
+```
+
+La clave nunca se versiona. Las pruebas simulan la API y la ignoran aunque este
+definida en el entorno.
+
+## Despliegue en Render
+
+`render.yaml` define un Web Service gratuito. En Render: **New > Blueprint**,
+elegir el repositorio e indicar como Blueprint Path
+`Trabajos_Grupales/Trabajos_Practicos/Evaluables/Tp6/Programa/render.yaml`.
+
+Render genera `DJANGO_SECRET_KEY` y desactiva `DEBUG`; sin esas variables,
+`settings.py` usa los valores de desarrollo. El disco del plan gratuito no
+persiste: cada arranque migra la base y carga los turnos de los proximos siete
+dias, por lo que las inscripciones se pierden al reiniciarse el servicio.
+
+Render bloquea el SMTP saliente en el plan gratuito, por lo que el correo sale
+por Brevo. Al crear el Blueprint, Render pide los valores de `BREVO_API_KEY` y
+`CORREO_REMITENTE`. Sin ellos, la confirmacion avisa que el correo no pudo
+enviarse.
