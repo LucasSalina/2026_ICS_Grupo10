@@ -2,6 +2,7 @@
 
 import base64
 import re
+import urllib.error
 from collections.abc import Iterator
 from datetime import date, datetime, time
 from unittest.mock import MagicMock, patch
@@ -9,6 +10,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from django.test import Client
 from django.utils import timezone
+from pytest_django.fixtures import Settings
 
 from core.models import Actividad, Horario, Inscripcion
 from core.qr import GenerarQr
@@ -508,3 +510,22 @@ def test_confirmacion_avisa_cuando_no_se_pudo_enviar_el_correo(
     contenido = respuesta.content.decode()
     assert "No pudimos enviar el correo a ana@ejemplo.com" in contenido
     assert "Enviamos el resumen" not in contenido
+
+
+@pytest.mark.django_db
+def test_formulario_confirma_la_inscripcion_aunque_falle_brevo(
+    client: Client,
+    horario_tirolesa: Horario,
+    api_brevo: MagicMock,
+    settings: Settings,
+) -> None:
+    """Un error de la API de Brevo no cancela la inscripción y se avisa en el pase."""
+    settings.BREVO_API_KEY = "clave-de-prueba"
+    api_brevo.side_effect = urllib.error.URLError("sin conexión")
+
+    respuesta = client.post(
+        URL_FORMULARIO_TIROLESA, datos_de_inscripcion(horario_tirolesa)
+    )
+
+    assert Inscripcion.objects.exists()
+    assert "No pudimos enviar el correo a ana@ejemplo.com" in respuesta.content.decode()
