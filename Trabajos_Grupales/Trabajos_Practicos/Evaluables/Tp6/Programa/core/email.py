@@ -39,13 +39,8 @@ def _enviar_por_brevo(destinatario: str, qr: bytes, resumen: str) -> None:
         pass
 
 
-def enviar_mail_confirmacion_registro_a_actividad(
-    destinatario: str, qr: bytes, resumen: str = ""
-) -> None:
-    """Envía el resumen de la inscripción con su código QR incrustado."""
-    if settings.BREVO_API_KEY:
-        _enviar_por_brevo(destinatario, qr, resumen)
-        return
+def _enviar_por_smtp(destinatario: str, qr: bytes, resumen: str) -> None:
+    """Entrega el correo de confirmación al servidor SMTP con el QR incrustado."""
     cid_qr = make_msgid(domain="ecoharmony.park")
     msg = EmailMessage()
     msg["Subject"] = ASUNTO_CONFIRMACION
@@ -64,3 +59,13 @@ def enviar_mail_confirmacion_registro_a_actividad(
 
     with smtplib.SMTP(settings.CORREO_SMTP_HOST, settings.CORREO_SMTP_PUERTO) as server:
         server.send_message(msg)
+
+
+def enviar_mail_confirmacion_registro_a_actividad(
+    destinatario: str, qr: bytes, resumen: str = ""
+) -> None:
+    """Envía el resumen y el QR por Brevo si hay clave, o si no por SMTP."""
+    if settings.BREVO_API_KEY:
+        _enviar_por_brevo(destinatario, qr, resumen)
+    else:
+        _enviar_por_smtp(destinatario, qr, resumen)
