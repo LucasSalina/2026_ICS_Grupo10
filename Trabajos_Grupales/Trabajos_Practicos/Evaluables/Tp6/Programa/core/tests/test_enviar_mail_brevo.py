@@ -77,3 +77,16 @@ def test_brevo_envia_el_asunto_de_la_confirmacion(api_brevo: MagicMock) -> None:
         datos_enviados_a_brevo(api_brevo)["subject"]
         == "Tu inscripción en EcoHarmony Park está confirmada"
     )
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_incluye_el_resumen_en_el_cuerpo(api_brevo: MagicMock) -> None:
+    """Agrega al cuerpo HTML el resumen de la inscripción."""
+    enviar_mail_confirmacion_registro_a_actividad(
+        "ana@ejemplo.com", b"qr_falso", resumen="Tirolesa · 20/10/2026 · 10:00"
+    )
+
+    assert (
+        "Tirolesa · 20/10/2026 · 10:00"
+        in datos_enviados_a_brevo(api_brevo)["htmlContent"]
+    )
