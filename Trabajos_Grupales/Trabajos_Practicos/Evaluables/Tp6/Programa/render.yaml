@@ -15,3 +15,8 @@ services:
         value: "False"
       - key: DJANGO_SECRET_KEY
         generateValue: true
+      # Correo por la API de Brevo: los valores se cargan en el dashboard de Render.
+      - key: BREVO_API_KEY
+        sync: false
+      - key: CORREO_REMITENTE
+        sync: false
