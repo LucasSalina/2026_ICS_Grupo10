@@ -1,5 +1,6 @@
 """Comprueba el envío del correo de confirmación mediante la API de Brevo."""
 
+import base64
 import json
 from typing import Any
 from unittest.mock import MagicMock
@@ -90,3 +91,13 @@ def test_brevo_incluye_el_resumen_en_el_cuerpo(api_brevo: MagicMock) -> None:
         "Tirolesa · 20/10/2026 · 10:00"
         in datos_enviados_a_brevo(api_brevo)["htmlContent"]
     )
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_adjunta_el_qr_de_la_inscripcion(api_brevo: MagicMock) -> None:
+    """Adjunta el QR en PNG, porque Brevo no admite imágenes incrustadas."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    assert datos_enviados_a_brevo(api_brevo)["attachment"] == [
+        {"name": "qr.png", "content": base64.b64encode(b"qr_falso").decode()}
+    ]
