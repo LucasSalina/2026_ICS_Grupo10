@@ -1,5 +1,6 @@
 """Envía los correos de confirmación de inscripción a los visitantes."""
 
+import json
 import smtplib
 import urllib.request
 from email.message import EmailMessage
@@ -11,11 +12,12 @@ from django.template.loader import render_to_string
 URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
 
 
-def _enviar_por_brevo() -> None:
+def _enviar_por_brevo(destinatario: str) -> None:
     """Entrega el correo de confirmación a la API de Brevo."""
+    datos = {"to": [{"email": destinatario}]}
     solicitud = urllib.request.Request(
         URL_API_BREVO,
-        data=b"{}",
+        data=json.dumps(datos).encode(),
         headers={"api-key": settings.BREVO_API_KEY},
         method="POST",
     )
@@ -28,7 +30,7 @@ def enviar_mail_confirmacion_registro_a_actividad(
 ) -> None:
     """Envía el resumen de la inscripción con su código QR incrustado."""
     if settings.BREVO_API_KEY:
-        _enviar_por_brevo()
+        _enviar_por_brevo(destinatario)
         return
     cid_qr = make_msgid(domain="ecoharmony.park")
     msg = EmailMessage()
