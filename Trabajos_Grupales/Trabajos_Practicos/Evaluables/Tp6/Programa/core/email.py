@@ -13,12 +13,15 @@ URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
 ASUNTO_CONFIRMACION = "Tu inscripción en EcoHarmony Park está confirmada"
 
 
-def _enviar_por_brevo(destinatario: str) -> None:
+def _enviar_por_brevo(destinatario: str, resumen: str) -> None:
     """Entrega el correo de confirmación a la API de Brevo."""
     datos: dict[str, object] = {
         "sender": {"name": "EcoHarmony Park", "email": settings.CORREO_REMITENTE},
         "to": [{"email": destinatario}],
         "subject": ASUNTO_CONFIRMACION,
+        "htmlContent": render_to_string(
+            "core/correo_confirmacion.html", {"resumen": resumen}
+        ),
     }
     solicitud = urllib.request.Request(
         URL_API_BREVO,
@@ -38,7 +41,7 @@ def enviar_mail_confirmacion_registro_a_actividad(
 ) -> None:
     """Envía el resumen de la inscripción con su código QR incrustado."""
     if settings.BREVO_API_KEY:
-        _enviar_por_brevo(destinatario)
+        _enviar_por_brevo(destinatario, resumen)
         return
     cid_qr = make_msgid(domain="ecoharmony.park")
     msg = EmailMessage()
