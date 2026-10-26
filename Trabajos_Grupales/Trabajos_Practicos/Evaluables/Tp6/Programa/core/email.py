@@ -18,7 +18,10 @@ def _enviar_por_brevo(destinatario: str) -> None:
     solicitud = urllib.request.Request(
         URL_API_BREVO,
         data=json.dumps(datos).encode(),
-        headers={"api-key": settings.BREVO_API_KEY},
+        headers={
+            "api-key": settings.BREVO_API_KEY,
+            "content-type": "application/json",
+        },
         method="POST",
     )
     with urllib.request.urlopen(solicitud):
