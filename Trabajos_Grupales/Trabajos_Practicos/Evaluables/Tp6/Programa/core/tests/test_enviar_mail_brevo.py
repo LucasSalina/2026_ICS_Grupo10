@@ -101,3 +101,11 @@ def test_brevo_adjunta_el_qr_de_la_inscripcion(api_brevo: MagicMock) -> None:
     assert datos_enviados_a_brevo(api_brevo)["attachment"] == [
         {"name": "qr.png", "content": base64.b64encode(b"qr_falso").decode()}
     ]
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_limita_la_espera_de_la_respuesta(api_brevo: MagicMock) -> None:
+    """No deja la inscripción esperando indefinidamente a la API."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    assert api_brevo.call_args.kwargs.get("timeout") == 10
