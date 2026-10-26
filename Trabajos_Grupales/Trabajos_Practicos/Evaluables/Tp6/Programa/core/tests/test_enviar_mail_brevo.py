@@ -109,3 +109,13 @@ def test_brevo_limita_la_espera_de_la_respuesta(api_brevo: MagicMock) -> None:
     enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
 
     assert api_brevo.call_args.kwargs.get("timeout") == 10
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_avisa_que_el_qr_va_adjunto(api_brevo: MagicMock) -> None:
+    """Remite al adjunto en lugar de mostrar una imagen incrustada inexistente."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    cuerpo = datos_enviados_a_brevo(api_brevo)["htmlContent"]
+    assert "Tu código QR va adjunto en este correo." in cuerpo
+    assert "cid:" not in cuerpo
