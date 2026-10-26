@@ -66,3 +66,14 @@ def test_brevo_envia_desde_el_remitente_configurado(
         "name": "EcoHarmony Park",
         "email": "parque@ejemplo.com",
     }
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_envia_el_asunto_de_la_confirmacion(api_brevo: MagicMock) -> None:
+    """Titula el correo como confirmación de la inscripción."""
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    assert (
+        datos_enviados_a_brevo(api_brevo)["subject"]
+        == "Tu inscripción en EcoHarmony Park está confirmada"
+    )
