@@ -1,17 +1,35 @@
 """Envía los correos de confirmación de inscripción a los visitantes."""
 
 import smtplib
+import urllib.request
 from email.message import EmailMessage
 from email.utils import make_msgid
 
 from django.conf import settings
 from django.template.loader import render_to_string
 
+URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
+
+
+def _enviar_por_brevo() -> None:
+    """Entrega el correo de confirmación a la API de Brevo."""
+    solicitud = urllib.request.Request(
+        URL_API_BREVO,
+        data=b"{}",
+        headers={"api-key": settings.BREVO_API_KEY},
+        method="POST",
+    )
+    with urllib.request.urlopen(solicitud):
+        pass
+
 
 def enviar_mail_confirmacion_registro_a_actividad(
     destinatario: str, qr: bytes, resumen: str = ""
 ) -> None:
     """Envía el resumen de la inscripción con su código QR incrustado."""
+    if settings.BREVO_API_KEY:
+        _enviar_por_brevo()
+        return
     cid_qr = make_msgid(domain="ecoharmony.park")
     msg = EmailMessage()
     msg["Subject"] = "Tu inscripción en EcoHarmony Park está confirmada"
