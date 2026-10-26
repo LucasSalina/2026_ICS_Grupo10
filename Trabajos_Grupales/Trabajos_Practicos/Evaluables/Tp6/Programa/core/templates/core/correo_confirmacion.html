@@ -25,7 +25,11 @@
         </tr>
         <tr>
           <td align="center" style="padding:20px 28px 8px;">
+            {% if cid_qr %}
             <img src="cid:{{ cid_qr }}" alt="Código QR" width="200" height="200" style="display:block;width:200px;height:200px;padding:10px;background:#ffffff;border:1px solid #e3e5d6;border-radius:14px;">
+            {% else %}
+            <p style="margin:0;padding:16px 18px;background:#ffffff;border:1px solid #e3e5d6;border-radius:14px;font-size:15px;font-weight:700;">Tu código QR va adjunto en este correo.</p>
+            {% endif %}
           </td>
         </tr>
         <tr>
