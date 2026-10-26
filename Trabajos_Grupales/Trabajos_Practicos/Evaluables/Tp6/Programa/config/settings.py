@@ -153,3 +153,5 @@ CORREO_SMTP_PUERTO = 1025
 
 # Con una clave de Brevo, core.email envía por su API HTTP en lugar de SMTP.
 BREVO_API_KEY = os.environ.get("BREVO_API_KEY", "")
+# Brevo solo envía desde remitentes verificados en la cuenta.
+CORREO_REMITENTE = os.environ.get("CORREO_REMITENTE", "noreply@example.com")

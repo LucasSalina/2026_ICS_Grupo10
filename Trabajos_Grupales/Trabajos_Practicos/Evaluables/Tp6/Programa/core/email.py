@@ -14,7 +14,10 @@ URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
 
 def _enviar_por_brevo(destinatario: str) -> None:
     """Entrega el correo de confirmación a la API de Brevo."""
-    datos = {"to": [{"email": destinatario}]}
+    datos: dict[str, object] = {
+        "sender": {"name": "EcoHarmony Park", "email": settings.CORREO_REMITENTE},
+        "to": [{"email": destinatario}],
+    }
     solicitud = urllib.request.Request(
         URL_API_BREVO,
         data=json.dumps(datos).encode(),
