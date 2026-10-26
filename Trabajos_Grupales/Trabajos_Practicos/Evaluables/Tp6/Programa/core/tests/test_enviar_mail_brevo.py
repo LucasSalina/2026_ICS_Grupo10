@@ -51,3 +51,18 @@ def test_brevo_recibe_los_datos_como_json(api_brevo: MagicMock) -> None:
 
     solicitud = api_brevo.call_args[0][0]
     assert solicitud.get_header("Content-type") == "application/json"
+
+
+@pytest.mark.usefixtures("clave_brevo")
+def test_brevo_envia_desde_el_remitente_configurado(
+    api_brevo: MagicMock, settings: Settings
+) -> None:
+    """Usa como remitente la dirección verificada en Brevo."""
+    settings.CORREO_REMITENTE = "parque@ejemplo.com"
+
+    enviar_mail_confirmacion_registro_a_actividad("ana@ejemplo.com", b"qr_falso")
+
+    assert datos_enviados_a_brevo(api_brevo)["sender"] == {
+        "name": "EcoHarmony Park",
+        "email": "parque@ejemplo.com",
+    }
