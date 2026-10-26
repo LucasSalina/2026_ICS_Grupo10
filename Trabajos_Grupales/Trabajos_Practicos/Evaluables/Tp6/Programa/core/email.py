@@ -10,6 +10,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
+ASUNTO_CONFIRMACION = "Tu inscripción en EcoHarmony Park está confirmada"
 
 
 def _enviar_por_brevo(destinatario: str) -> None:
@@ -17,7 +18,7 @@ def _enviar_por_brevo(destinatario: str) -> None:
     datos: dict[str, object] = {
         "sender": {"name": "EcoHarmony Park", "email": settings.CORREO_REMITENTE},
         "to": [{"email": destinatario}],
-        "subject": "Tu inscripción en EcoHarmony Park está confirmada",
+        "subject": ASUNTO_CONFIRMACION,
     }
     solicitud = urllib.request.Request(
         URL_API_BREVO,
@@ -41,7 +42,7 @@ def enviar_mail_confirmacion_registro_a_actividad(
         return
     cid_qr = make_msgid(domain="ecoharmony.park")
     msg = EmailMessage()
-    msg["Subject"] = "Tu inscripción en EcoHarmony Park está confirmada"
+    msg["Subject"] = ASUNTO_CONFIRMACION
     msg["From"] = "EcoHarmony Park <noreply@example.com>"
     msg["To"] = destinatario
     msg.set_content(
