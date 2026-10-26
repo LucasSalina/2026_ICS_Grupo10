@@ -17,6 +17,7 @@ def _enviar_por_brevo(destinatario: str) -> None:
     datos: dict[str, object] = {
         "sender": {"name": "EcoHarmony Park", "email": settings.CORREO_REMITENTE},
         "to": [{"email": destinatario}],
+        "subject": "Tu inscripción en EcoHarmony Park está confirmada",
     }
     solicitud = urllib.request.Request(
         URL_API_BREVO,
