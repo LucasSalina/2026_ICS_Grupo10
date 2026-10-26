@@ -11,6 +11,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 URL_API_BREVO = "https://api.brevo.com/v3/smtp/email"
+ESPERA_MAXIMA_BREVO_SEGUNDOS = 10
 ASUNTO_CONFIRMACION = "Tu inscripción en EcoHarmony Park está confirmada"
 
 
@@ -34,7 +35,7 @@ def _enviar_por_brevo(destinatario: str, qr: bytes, resumen: str) -> None:
         },
         method="POST",
     )
-    with urllib.request.urlopen(solicitud):
+    with urllib.request.urlopen(solicitud, timeout=ESPERA_MAXIMA_BREVO_SEGUNDOS):
         pass
 
 
