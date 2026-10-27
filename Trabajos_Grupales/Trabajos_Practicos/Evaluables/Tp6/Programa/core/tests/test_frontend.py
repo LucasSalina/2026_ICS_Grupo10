@@ -443,6 +443,18 @@ def test_formulario_envia_el_correo_de_confirmacion(
 
 
 @pytest.mark.django_db
+def test_correo_de_confirmacion_incluye_el_numero_de_orden(
+    client: Client, horario_tirolesa: Horario, servidor_smtp: MagicMock
+) -> None:
+    """Informa en el correo el mismo número que muestra la confirmación."""
+    client.post(URL_FORMULARIO_TIROLESA, datos_de_inscripcion(horario_tirolesa))
+
+    mensaje_enviado = servidor_smtp.send_message.call_args[0][0]
+    cuerpo = mensaje_enviado.get_body(preferencelist=("html",)).get_content()
+    assert f"Inscripción N.º {Inscripcion.objects.get().pk:06d}" in cuerpo
+
+
+@pytest.mark.django_db
 def test_correo_de_confirmacion_incluye_el_qr_de_la_inscripcion(
     client: Client, horario_tirolesa: Horario, servidor_smtp: MagicMock
 ) -> None:
