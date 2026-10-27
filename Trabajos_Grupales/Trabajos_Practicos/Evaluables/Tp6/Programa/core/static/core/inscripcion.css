@@ -4,7 +4,7 @@
 :root {
   --card: #fffdf7;
   --field: #fbf9f1;
-  --field-line: #b9c0a6;
+  --field-line: #858e72;
   --muted: #5f6b56;
   --soft-line: #e3e5d6;
   --focus-ring: 0 0 0 4px rgb(167 201 87 / 45%);
@@ -38,10 +38,8 @@
 .registration-eyebrow {
   margin: 0 0 10px;
   color: var(--forest);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
 }
 
 .registration-eyebrow span { margin-right: 4px; color: var(--leaf); font-size: 17px; }
@@ -112,7 +110,7 @@
   letter-spacing: -.02em;
 }
 
-.registration-section-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+.registration-section-heading p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
 
 .step-number {
   display: grid;
@@ -191,7 +189,7 @@
 
 .activity-option-text { display: grid; gap: 1px; padding: 9px 11px 11px; }
 .activity-option-name { font-size: 16px; font-weight: 900; letter-spacing: -.02em; }
-.activity-option-meta { color: var(--muted); font-size: 11px; line-height: 1.35; }
+.activity-option-meta { color: var(--muted); font-size: 13px; line-height: 1.35; }
 
 .option-check {
   position: absolute;
@@ -234,7 +232,7 @@
   display: block;
   margin-bottom: 8px;
   padding: 0;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -258,7 +256,35 @@
 
 .choice-chip:active { transform: scale(.97); }
 .choice-title { font-size: 16px; font-weight: 900; letter-spacing: -.01em; }
-.choice-detail { color: var(--muted); font-size: 12px; line-height: 1.3; }
+
+/* El sol marca en su arco la hora del turno: bajo a las 9, alto al mediodía. */
+.sun-arc {
+  --angulo: calc((var(--hora) - 9) / 8 * 180deg);
+  position: relative;
+  justify-self: center;
+  width: 26px;
+  height: 13px;
+  margin: 2px 0 4px;
+  border: 1.5px solid currentColor;
+  border-bottom: 0;
+  border-radius: 26px 26px 0 0;
+  color: #c9cfb7;
+}
+.sun-arc::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - cos(var(--angulo)) * 50%);
+  bottom: calc(sin(var(--angulo)) * 100%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d9a653;
+  transform: translate(-50%, 50%);
+  transition: transform .4s var(--ease-out);
+}
+.choice-chip:has(input:checked) .sun-arc { color: rgb(242 232 207 / 45%); }
+.choice-chip:has(input:checked) .sun-arc::after { background: var(--lime); transform: translate(-50%, 50%) scale(1.35); }
+.choice-detail { color: var(--muted); font-size: 14px; line-height: 1.3; }
 .choice-detail.is-low { color: var(--red); font-weight: 700; }
 .time-chip { text-align: center; }
 
@@ -285,7 +311,7 @@
   display: block;
   margin-top: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -315,7 +341,7 @@
   background-size: 18px;
 }
 
-.registration-field input::placeholder { color: #8a927f; }
+.registration-field input::placeholder { color: #6b7461; }
 
 .registration-field input:focus,
 .registration-field select:focus,
@@ -372,6 +398,13 @@
 
 .stepper input::-webkit-inner-spin-button,
 .stepper input::-webkit-outer-spin-button { margin: 0; appearance: none; }
+.stepper input.is-bumping { animation: bump .32s var(--ease-out); }
+
+@keyframes bump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.14); background: #eef3df; }
+  100% { transform: scale(1); }
+}
 
 .participant-count small.is-warning { color: var(--red); font-weight: 700; }
 
@@ -408,7 +441,7 @@
   border-radius: 50%;
   background: var(--lime);
   color: var(--deep);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .participant-fields {
@@ -439,21 +472,47 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  min-height: 48px;
   margin-top: 14px;
-  font-size: 14px;
+  padding: 4px 0;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .terms-acceptance input {
-  flex: 0 0 22px;
-  width: 22px;
-  height: 22px;
+  position: relative;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
   margin: 0;
-  accent-color: var(--forest);
+  border: 2px solid var(--forest);
+  border-radius: 8px;
+  background: var(--card);
+  appearance: none;
+  cursor: pointer;
+  transition: background .2s, transform .2s var(--ease-out);
 }
+/* La tilde se dibuja al aceptar. */
+.terms-acceptance input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  width: 6px;
+  height: 12px;
+  border: solid var(--paper);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform .25s .05s cubic-bezier(.3, 1.6, .5, 1);
+}
+.terms-acceptance input:checked { background: var(--forest); transform: rotate(-6deg); }
+.terms-acceptance input:checked::after { transform: rotate(45deg) scale(1); }
+.terms-acceptance input:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
 
 /* Resumen: barra fija abajo en el celular, panel lateral en escritorio. */
+
+html:has(.booking-summary) { scroll-padding-bottom: 150px; }
 
 .booking-summary {
   position: sticky;
@@ -461,28 +520,60 @@
   z-index: 5;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px 12px;
   margin: 4px -16px 0;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
   border-radius: 20px 20px 0 0;
-  background: var(--deep);
+  background: var(--deep) var(--curvas-de-nivel);
   color: var(--paper);
   box-shadow: 0 -10px 30px -12px rgb(33 62 43 / 45%);
 }
 
 .summary-art, .summary-title, .summary-list { display: none; }
 
+/* Sendero: el caminante avanza un nodo por cada paso completo. */
+.trail {
+  --trail-base: rgb(242 232 207 / 30%);
+  --trail-done: var(--lime);
+  --trail-node: var(--deep);
+  --trail-walker: var(--paper);
+  flex: 1 0 100%;
+  order: -1;
+}
+.trail svg { display: block; width: 100%; height: auto; overflow: visible; }
+.trail-path { fill: none; stroke: var(--trail-base); stroke-width: 2.5; stroke-dasharray: 1 6; stroke-linecap: round; }
+.trail-done { fill: none; stroke: var(--trail-done); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.trail-nodes circle { fill: var(--trail-node); stroke: var(--trail-base); stroke-width: 2; transition: fill .3s, stroke .3s; }
+.trail-nodes circle.is-done { fill: var(--trail-done); stroke: var(--trail-done); }
+.trail-nodes circle.is-next { stroke: var(--trail-done); transform-box: fill-box; transform-origin: center; animation: trail-pulse 1.8s ease-in-out infinite; }
+.trail-flag { fill: none; stroke: var(--trail-base); stroke-width: 2; stroke-linejoin: round; transition: stroke .3s; }
+.trail.is-finished .trail-flag { stroke: var(--red); fill: var(--red); transform-box: fill-box; transform-origin: 0 100%; animation: flag-wave 1s ease-in-out 3; }
+.trail-walker circle { fill: var(--trail-walker); stroke: var(--trail-done); stroke-width: 2.5; }
+.trail-walker path { fill: var(--forest); stroke: var(--trail-walker); stroke-width: 1; stroke-linecap: round; }
+
+@keyframes trail-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+
+@keyframes flag-wave {
+  0%, 100% { transform: skewY(0); }
+  50% { transform: skewY(-12deg); }
+}
+
 .summary-compact {
   display: grid;
   min-width: 0;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.3;
   color: #d9e4c6;
 }
 
 .summary-compact strong { overflow: hidden; color: var(--paper); font-size: 15px; text-overflow: ellipsis; white-space: nowrap; }
+.summary-compact span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .submit-button {
   flex: 0 0 auto;
@@ -494,6 +585,14 @@
 }
 
 .submit-button:hover { background: #b9d86a; }
+.submit-button.is-sending > span { display: inline-block; width: 18px; height: 18px; border-radius: 0 100% 0 100%; background: currentColor; font-size: 0; animation: leaf-spin .9s linear infinite; }
+
+@keyframes leaf-spin { to { transform: rotate(360deg); } }
+
+/* En pantallas angostas la flecha decorativa le quita lugar al resumen. */
+@media (max-width: 399px) {
+  .submit-button > span { display: none; }
+}
 .submit-button:disabled { opacity: .75; cursor: progress; transform: none; }
 
 .registration-body footer { margin-top: 0; }
@@ -529,10 +628,38 @@
   border-radius: 22px;
   background: var(--card);
   box-shadow: 0 2px 4px rgb(33 62 43 / 8%), 0 24px 48px -20px rgb(33 62 43 / 35%);
-  animation: rise .6s var(--ease-out) both;
+  animation: pass-arrive .7s var(--ease-out) both, pass-thump .4s 1.32s ease-out;
 }
 
 .pass-top { position: relative; aspect-ratio: 500 / 230; overflow: hidden; background: #e9e5c7; }
+
+/* Al caer el sello saltan hojas del parque. */
+.pass-leaves { position: absolute; right: 70px; bottom: 34px; z-index: 1; pointer-events: none; }
+.pass-leaves i {
+  position: absolute;
+  width: 20px;
+  height: 13px;
+  border-radius: 0 100% 0 100%;
+  background: var(--forest);
+  box-shadow: inset -3px -2px 0 rgb(0 0 0 / 12%);
+  opacity: 0;
+  animation: leaf-burst 1.6s calc(1.34s + var(--d)) cubic-bezier(.15, .7, .35, 1) both;
+}
+.pass-leaves i:nth-child(3n) { background: var(--leaf); }
+.pass-leaves i:nth-child(4n) { background: var(--red); width: 13px; height: 13px; border-radius: 50% 50% 50% 0; }
+
+/* Un haz recorre el QR una vez, como si se escaneara. */
+.pass-qr-frame { position: relative; display: block; overflow: hidden; border-radius: 14px; --alto-qr: min(220px, 62vw); }
+.pass-qr-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--lime);
+  box-shadow: 0 0 14px 4px rgb(167 201 87 / 55%);
+  opacity: 0;
+  animation: qr-scan 1.1s 1.7s ease-in-out both;
+}
 
 .pass-stamp {
   position: absolute;
@@ -548,25 +675,24 @@
   letter-spacing: .12em;
   text-transform: uppercase;
   transform: rotate(-9deg);
-  animation: stamp .45s .55s cubic-bezier(.3, 1.4, .5, 1) both;
+  z-index: 2;
+  animation: stamp .42s 1.1s cubic-bezier(.5, 0, .75, 0) both;
 }
 
 .pass-body { padding: 20px 20px 18px; }
 
 .pass-label {
   margin: 0 0 4px;
-  color: var(--leaf);
-  font-size: 12px;
+  color: var(--forest);
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
 }
 
 .pass-body h2 { margin: 0 0 14px; font-size: 32px; line-height: 1; letter-spacing: -.04em; }
 
 .pass-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; }
 .pass-facts div { min-width: 0; }
-.pass-facts dt { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.pass-facts dt { color: var(--muted); font-size: 14px; font-weight: 700; }
 .pass-facts dd { margin: 1px 0 0; font-size: 16px; font-weight: 900; }
 
 .pass-tear {
@@ -603,7 +729,7 @@
   image-rendering: pixelated;
 }
 
-.pass-qr p { margin: 0; color: var(--muted); font-size: 13px; }
+.pass-qr p { margin: 0; color: var(--muted); font-size: 15px; }
 .pass-code { color: var(--ink); font-size: 14px; font-weight: 900; letter-spacing: .08em; }
 
 .pass-people { padding: 16px 20px 20px; border-top: 1px solid var(--soft-line); }
@@ -623,7 +749,7 @@
 }
 
 .pass-people li span:last-child { display: grid; font-weight: 700; }
-.pass-people small { color: var(--muted); font-size: 12px; font-weight: 400; }
+.pass-people small { color: var(--muted); font-size: 14px; font-weight: 400; }
 
 .pass-actions { display: grid; gap: 10px; margin-top: 20px; }
 .pass-actions .button { justify-content: center; gap: 14px; }
@@ -644,8 +770,33 @@
 }
 
 @keyframes stamp {
-  from { opacity: 0; transform: rotate(-9deg) scale(1.9); }
-  to { opacity: 1; transform: rotate(-9deg) scale(1); }
+  0% { opacity: 0; transform: rotate(-24deg) scale(3); }
+  70% { opacity: 1; }
+  100% { opacity: 1; transform: rotate(-9deg) scale(1); }
+}
+
+@keyframes pass-arrive {
+  from { opacity: 0; transform: translateY(40px) rotate(2.5deg) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pass-thump {
+  0%, 100% { transform: none; }
+  30% { transform: translateY(3px) scale(.992); }
+  60% { transform: translateY(-1px) rotate(-.4deg); }
+}
+
+@keyframes leaf-burst {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0) scale(.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--x), calc(var(--y) + 90px)) rotate(var(--r)) scale(1); }
+}
+
+@keyframes qr-scan {
+  0% { opacity: 0; transform: translateY(0); }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(var(--alto-qr)); }
 }
 
 @media (hover: hover) {
@@ -673,6 +824,7 @@
 /* Escritorio: el resumen pasa a una columna fija junto a los pasos. */
 
 @media (min-width: 1000px) {
+  html:has(.booking-summary) { scroll-padding-bottom: 0; }
   .registration-page { padding: 56px 32px 72px; }
   .registration-heading { margin-bottom: 32px; }
   .registration-heading h1 { max-width: 14ch; }
@@ -707,6 +859,14 @@
   .summary-art { display: block; aspect-ratio: 500 / 220; overflow: hidden; background: #e9e5c7; }
   .summary-title { display: block; margin: 20px 22px 6px; font-size: 20px; letter-spacing: -.02em; }
   .summary-list { display: grid; margin: 0 22px 18px; }
+  .trail {
+    --trail-base: #c9cfb7;
+    --trail-done: var(--forest);
+    --trail-node: var(--card);
+    --trail-walker: var(--lime);
+    order: 0;
+    margin: 0 22px 16px;
+  }
 
   .summary-list div {
     display: flex;

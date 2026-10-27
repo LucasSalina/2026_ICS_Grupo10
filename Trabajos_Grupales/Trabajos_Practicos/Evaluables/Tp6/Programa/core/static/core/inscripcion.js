@@ -40,6 +40,7 @@
   const resumenCompacto = document.querySelector('[data-summary="compacto"]');
   const pasos = [...document.querySelectorAll("[data-step]")];
   const boton = formulario.querySelector(".submit-button");
+  const sinMovimiento = matchMedia("(prefers-reduced-motion: reduce)");
 
   const turnoElegido = () => document.querySelector('input[name="horario"]:checked');
   const lugaresDelTurno = () => Number(turnoElegido()?.dataset.cupos || tarjetas.length);
@@ -77,7 +78,56 @@
     const fin = hora ? `${String(Number(hora.slice(0, 2)) + 1).padStart(2, "0")}:00` : "";
     if (resumenTurno) resumenTurno.textContent = hora ? `${hora} a ${fin}` : "Sin elegir";
     if (resumenPersonas) resumenPersonas.textContent = personas(pedidos);
-    if (resumenCompacto) resumenCompacto.textContent = hora ? `${hora} · ${personas(pedidos)}` : "Elegí fecha y turno";
+    if (resumenCompacto) resumenCompacto.textContent = hora ? `${hora}, ${personas(pedidos)}` : "Elegí fecha y turno";
+  }
+
+  // Sendero: el caminante avanza hasta el primer paso pendiente.
+  const sendero = document.querySelector(".trail");
+  const camino = sendero?.querySelector(".trail-path");
+  const caminoHecho = sendero?.querySelector(".trail-done");
+  const caminante = sendero?.querySelector(".trail-walker");
+  const nodos = sendero ? [...sendero.querySelectorAll(".trail-nodes circle")] : [];
+  const largoTotal = camino ? camino.getTotalLength() : 0;
+  const largoDeNodo = nodos.map((nodo) => {
+    const x = Number(nodo.getAttribute("cx"));
+    let mejor = 0;
+    let distancia = Infinity;
+    for (let largo = 0; largo <= largoTotal; largo += 1) {
+      const diferencia = Math.abs(camino.getPointAtLength(largo).x - x);
+      if (diferencia < distancia) [mejor, distancia] = [largo, diferencia];
+    }
+    return mejor;
+  });
+  let largoActual = 0;
+  let recorrido = 0;
+
+  function ubicarCaminante(largo) {
+    const punto = camino.getPointAtLength(largo);
+    caminante.setAttribute("transform", `translate(${punto.x} ${punto.y})`);
+    caminoHecho.style.strokeDashoffset = String(100 - (largo / largoTotal) * 100);
+    largoActual = largo;
+  }
+
+  function avanzarSendero(completos) {
+    if (!sendero) return;
+    const destino = largoDeNodo[Math.min(completos, nodos.length - 1)];
+    nodos.forEach((nodo, indice) => {
+      nodo.classList.toggle("is-done", indice < completos);
+      nodo.classList.toggle("is-next", indice === completos);
+    });
+    sendero.classList.toggle("is-finished", completos >= nodos.length);
+    cancelAnimationFrame(recorrido);
+    if (sinMovimiento.matches) return ubicarCaminante(destino);
+    const origen = largoActual;
+    const inicio = performance.now();
+    const duracion = 500 + Math.abs(destino - origen) * 4;
+    const paso = (ahora) => {
+      const t = Math.min((ahora - inicio) / duracion, 1);
+      const suave = t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      ubicarCaminante(origen + (destino - origen) * suave);
+      if (t < 1) recorrido = requestAnimationFrame(paso);
+    };
+    recorrido = requestAnimationFrame(paso);
   }
 
   function marcarPasos() {
@@ -88,12 +138,19 @@
       const completo = campos.length > 0 && campos.every((campo) => campo.checkValidity());
       paso.classList.toggle("is-complete", completo);
     });
+    const primeroPendiente = pasos.findIndex((paso) => !paso.classList.contains("is-complete"));
+    avanzarSendero(primeroPendiente === -1 ? pasos.length : primeroPendiente);
   }
 
   document.querySelectorAll("[data-step-by]").forEach((control) => {
     control.addEventListener("click", () => {
       const actual = Math.trunc(Number(cantidad.value)) || 0;
       const siguiente = Math.min(Math.max(actual + Number(control.dataset.stepBy), 1), lugaresDelTurno());
+      if (siguiente !== actual) {
+        cantidad.classList.remove("is-bumping");
+        void cantidad.offsetWidth;
+        cantidad.classList.add("is-bumping");
+      }
       cantidad.value = String(siguiente);
       mostrarParticipantes();
       marcarPasos();
@@ -113,11 +170,13 @@
   formulario.addEventListener("submit", () => {
     boton.disabled = true;
     boton.setAttribute("aria-busy", "true");
-    boton.firstChild.textContent = "Confirmando… ";
+    boton.classList.add("is-sending");
+    boton.firstChild.textContent = "Reservando tu lugar… ";
   });
   window.addEventListener("pageshow", () => {
     boton.disabled = false;
     boton.removeAttribute("aria-busy");
+    boton.classList.remove("is-sending");
     boton.firstChild.textContent = "Finalizar inscripción ";
     document.body.classList.remove("is-loading");
   });

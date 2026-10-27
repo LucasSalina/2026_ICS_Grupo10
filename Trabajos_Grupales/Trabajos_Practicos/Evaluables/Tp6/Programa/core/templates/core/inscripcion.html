@@ -59,7 +59,7 @@
           <span class="activity-option-art">{% include 'core/ilustracion.html' with actividad=opcion.arte %}</span>
           <span class="activity-option-text">
             <span class="activity-option-name">{{ opcion.nombre }}</span>
-            <span class="activity-option-meta">{% if opcion.edad_minima %}Desde {{ opcion.edad_minima }} años{% else %}Todas las edades{% endif %}{% if opcion.requiere_talle %} · Con talle{% endif %}</span>
+            <span class="activity-option-meta">{% if opcion.edad_minima %}Desde {{ opcion.edad_minima }} años{% else %}Todas las edades{% endif %}{% if opcion.requiere_talle %}, con talle{% endif %}</span>
           </span>
           <span class="option-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span>
         </label>
@@ -99,6 +99,7 @@
           {% for horario in horarios_disponibles %}
           <label class="choice-chip time-chip">
             <input type="radio" name="horario" value="{{ horario.pk }}" data-cupos="{{ horario.cupos_disponibles }}" required{% if envio.horario == horario.pk|stringformat:"d" %} checked{% endif %}>
+            <span class="sun-arc" style="--hora: {{ horario.hora|time:'G' }}" aria-hidden="true"></span>
             <span class="choice-title">{{ horario.hora|time:'H:i' }}</span>
             <span class="choice-detail{% if horario.cupos_disponibles <= 3 %} is-low{% endif %}">{{ horario.cupos_disponibles }} lugar{{ horario.cupos_disponibles|pluralize:"es" }}</span>
           </label>
@@ -134,7 +135,7 @@
           <div class="participant-fields">
             <div class="registration-field field-name">
               <label for="nombre-{{ participante.numero }}">Nombre y apellido</label>
-              <input id="nombre-{{ participante.numero }}" name="participante_{{ participante.numero }}_nombre" type="text" value="{{ participante.nombre }}" autocomplete="off" placeholder="Como figura en el DNI" required{% if not participante.visible %} disabled{% endif %}>
+              <input id="nombre-{{ participante.numero }}" name="participante_{{ participante.numero }}_nombre" type="text" value="{{ participante.nombre }}" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Como figura en el DNI" required{% if not participante.visible %} disabled{% endif %}>
             </div>
             <div class="registration-field">
               <label for="dni-{{ participante.numero }}">DNI</label>
@@ -192,6 +193,17 @@
         <div><dt>Turno</dt><dd data-summary="turno">Sin elegir</dd></div>
         <div><dt>Participantes</dt><dd data-summary="personas">{{ cantidad_inicial }} persona{{ cantidad_inicial|pluralize }}</dd></div>
       </dl>
+      <div class="trail" aria-hidden="true">
+        <svg viewBox="0 0 300 30">
+          <path class="trail-path" d="M12 17C35 5 58 5 81 11S127 25 150 18 196 4 219 11 265 24 288 15"/>
+          <path class="trail-done" d="M12 17C35 5 58 5 81 11S127 25 150 18 196 4 219 11 265 24 288 15" pathLength="100"/>
+          <g class="trail-nodes">
+            <circle cx="12" cy="17" r="5"/><circle cx="81" cy="11" r="5"/><circle cx="150" cy="18" r="5"/><circle cx="219" cy="11" r="5"/><circle cx="288" cy="15" r="5"/>
+          </g>
+          <path class="trail-flag" d="M288 15V1m0 0 10 4-10 4"/>
+          <g class="trail-walker" transform="translate(12 17)"><circle r="8"/><path d="M-4 3.5C-4.5-2 0-4.5 4.5-4.5 4.5 0 2 4-4 3.5Zm0 0L1.5-1.5"/></g>
+        </svg>
+      </div>
       <p class="summary-compact" aria-hidden="true"><strong>{{ actividad_elegida.nombre }}</strong> <span data-summary="compacto">Elegí fecha y turno</span></p>
       <button class="button button-dark submit-button" type="submit">Finalizar inscripción <span aria-hidden="true">↗</span></button>
     </aside>

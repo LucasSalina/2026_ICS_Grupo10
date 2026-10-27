@@ -32,10 +32,11 @@
     {% endif %}
   </div>
 
-  <article class="activity-pass" aria-labelledby="pass-title">
+  <article class="activity-pass pass-{{ arte.codigo|lower }}" aria-labelledby="pass-title">
     <div class="pass-top">
       {% include 'core/ilustracion.html' with actividad=arte %}
       <span class="pass-stamp" aria-hidden="true">Confirmada</span>
+      <span class="pass-leaves" aria-hidden="true"><i style="--x:-200px;--y:-80px;--r:-170deg;--d:0ms"></i><i style="--x:-150px;--y:-120px;--r:140deg;--d:30ms"></i><i style="--x:-95px;--y:-135px;--r:-90deg;--d:10ms"></i><i style="--x:-40px;--y:-150px;--r:220deg;--d:60ms"></i><i style="--x:20px;--y:-130px;--r:-200deg;--d:20ms"></i><i style="--x:70px;--y:-100px;--r:160deg;--d:50ms"></i><i style="--x:-240px;--y:-30px;--r:100deg;--d:40ms"></i><i style="--x:-60px;--y:-60px;--r:-260deg;--d:80ms"></i><i style="--x:110px;--y:-45px;--r:190deg;--d:15ms"></i><i style="--x:-170px;--y:-10px;--r:-120deg;--d:70ms"></i><i style="--x:40px;--y:-160px;--r:250deg;--d:90ms"></i><i style="--x:-120px;--y:-100px;--r:60deg;--d:35ms"></i></span>
     </div>
     <div class="pass-body">
       <p class="pass-label">Pase de actividad</p>
@@ -49,7 +50,7 @@
     </div>
     <div class="pass-tear" aria-hidden="true"></div>
     <div class="pass-qr">
-      <img src="data:image/png;base64,{{ qr }}" alt="Código QR de la inscripción N.º {{ inscripcion.pk|stringformat:'06d' }}" width="220" height="220">
+      <span class="pass-qr-frame"><img src="data:image/png;base64,{{ qr }}" alt="Código QR de la inscripción N.º {{ inscripcion.pk|stringformat:'06d' }}" width="220" height="220"></span>
       <p>Mostralo al llegar a la actividad.</p>
     </div>
     <div class="pass-people">
@@ -58,7 +59,7 @@
         {% for participante in inscripcion.participantes.all %}
         <li>
           <span class="pass-avatar" aria-hidden="true">{{ participante.nombre|first|upper }}</span>
-          <span>{{ participante.nombre }}<small>DNI {{ participante.dni }} · {{ participante.edad }} año{{ participante.edad|pluralize }}{% if participante.talle %} · Talle {{ participante.talle }}{% endif %}</small></span>
+          <span>{{ participante.nombre }}<small>DNI {{ participante.dni }}, {{ participante.edad }} año{{ participante.edad|pluralize }}{% if participante.talle %}, talle {{ participante.talle }}{% endif %}</small></span>
         </li>
         {% endfor %}
       </ul>
