@@ -2,7 +2,7 @@
 
 Ejecutar los comandos siguientes desde esta carpeta (`Programa`).
 El entorno verificado usa **CPython 3.14.8 en macOS ARM64**, la version que fija
-la guia de estilo (`../Material_Adicional/2026-ICS_Produccion_TP6_ConradoJuncos.pdf`).
+la guia de estilo (`../Material_Adicional/CodeStyle.pdf`).
 No se ha verificado esta instalacion en otros sistemas operativos.
 
 ## Instalacion
