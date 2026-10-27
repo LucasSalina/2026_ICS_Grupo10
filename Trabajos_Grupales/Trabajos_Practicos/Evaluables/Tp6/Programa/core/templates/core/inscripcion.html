@@ -177,7 +177,9 @@
         <span class="step-number" aria-hidden="true">5</span>
         <div><h2 id="terminos-title">Términos y condiciones de {{ actividad_elegida.nombre }}</h2><p>Leelos antes de confirmar.</p></div>
       </div>
-      <p id="activity-terms">{{ actividad_elegida.terminos }}</p>
+      <ol id="activity-terms">
+        {% for clausula in actividad_elegida.terminos %}<li>{{ clausula }}</li>{% endfor %}
+      </ol>
       <label class="terms-acceptance"><input type="checkbox" name="acepta_terminos" required{% if envio.acepta_terminos %} checked{% endif %}> <span>Leí y acepto los términos y condiciones de {{ actividad_elegida.nombre }}.</span></label>
     </section>
     </div>

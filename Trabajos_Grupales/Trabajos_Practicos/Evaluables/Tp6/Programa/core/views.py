@@ -47,14 +47,48 @@ DESCRIPCIONES = {
 }
 
 TERMINOS_POR_ACTIVIDAD = {
-    "SAFARI": "La actividad se realiza siguiendo las indicaciones del equipo del parque. "
-    "Mantené una distancia segura de los animales y permanecé con tu grupo durante todo el recorrido.",
-    "TIROLESA": "La actividad requiere el uso del equipo de seguridad provisto por el parque. "
-    "Seguí las indicaciones del personal y utilizá la talla de vestimenta declarada.",
-    "PALESTRA": "La actividad se realiza con el equipo de seguridad provisto por el parque. "
-    "Respetá las indicaciones del personal y utilizá la talla de vestimenta declarada.",
-    "JARDINERIA": "La actividad se realiza en espacios al aire libre y con materiales provistos por el parque. "
-    "Seguí las indicaciones del equipo y cuidá las plantas y herramientas durante la experiencia.",
+    "SAFARI": (
+        "El participante deberá respetar en todo momento las indicaciones del personal encargado de la actividad.",
+        "El participante deberá permanecer dentro del recorrido habilitado y no podrá abandonar el grupo sin autorización del guía.",
+        "Queda prohibido alimentar, tocar, perseguir o molestar a los animales durante el recorrido.",
+        "El participante deberá mantener una conducta respetuosa hacia los animales y el entorno natural.",
+        "La actividad podrá suspenderse o reprogramarse por condiciones climáticas desfavorables o por motivos de seguridad y bienestar animal.",
+        "La inscripción estará sujeta a la disponibilidad de cupos para el horario seleccionado.",
+        "El participante deberá presentarse en el sector correspondiente con anticipación al horario reservado.",
+        "La aceptación de estos términos y condiciones será obligatoria para completar la inscripción.",
+    ),
+    "TIROLESA": (
+        "El participante deberá respetar en todo momento las indicaciones del personal encargado de la actividad.",
+        "El participante deberá cumplir con los requisitos de seguridad establecidos por EcoHarmony Park antes de utilizar la tirolesa.",
+        "El participante deberá informar su edad y talla de vestimenta al momento de la inscripción, para verificar que el equipamiento asignado sea adecuado.",
+        "La actividad podrá suspenderse o reprogramarse por condiciones climáticas desfavorables o por motivos de seguridad.",
+        "El participante deberá utilizar correctamente el arnés, el casco y los demás elementos de seguridad proporcionados por el parque.",
+        "La inscripción estará sujeta a la disponibilidad de cupos para el horario seleccionado.",
+        "El participante deberá presentarse en el sector correspondiente con anticipación al horario reservado.",
+        "La aceptación de estos términos y condiciones será obligatoria para completar la inscripción.",
+    ),
+    "PALESTRA": (
+        "El participante deberá respetar en todo momento las indicaciones del personal encargado de la actividad.",
+        "El participante deberá utilizar correctamente los elementos de protección y aseguramiento proporcionados por el parque.",
+        "Antes de comenzar, el participante deberá verificar junto al instructor que el equipamiento se encuentre correctamente colocado.",
+        "No estará permitido iniciar el ascenso sin la autorización del instructor responsable.",
+        "El participante deberá informar su edad y talla de vestimenta al momento de la inscripción, para permitir la asignación de equipamiento adecuado.",
+        "La actividad podrá suspenderse o reprogramarse por condiciones climáticas desfavorables, fallas en el equipamiento o motivos de seguridad.",
+        "La inscripción estará sujeta a la disponibilidad de cupos para el horario seleccionado.",
+        "El participante deberá presentarse en el sector correspondiente con anticipación al horario reservado.",
+        "La aceptación de estos términos y condiciones será obligatoria para completar la inscripción.",
+    ),
+    "JARDINERIA": (
+        "El participante deberá respetar en todo momento las indicaciones del personal encargado de la actividad.",
+        "El participante deberá utilizar responsablemente las herramientas y los materiales proporcionados durante la actividad.",
+        "Queda prohibido arrancar, dañar o retirar plantas del parque sin autorización del personal responsable.",
+        "El participante deberá respetar las especies vegetales y seguir las instrucciones para su cuidado y manipulación.",
+        "Las herramientas deberán devolverse al personal encargado al finalizar la actividad.",
+        "La actividad podrá suspenderse o reprogramarse por condiciones climáticas desfavorables o por motivos operativos.",
+        "La inscripción estará sujeta a la disponibilidad de cupos para el horario seleccionado.",
+        "El participante deberá presentarse en el sector correspondiente con anticipación al horario reservado.",
+        "La aceptación de estos términos y condiciones será obligatoria para completar la inscripción.",
+    ),
 }
 
 

@@ -547,13 +547,18 @@
 .terms-box .is-complete .step-number, .terms-box.is-complete .step-number { background: var(--forest); }
 
 #activity-terms {
+  display: grid;
+  gap: 8px;
   margin: 0;
-  padding: 14px;
+  padding: 14px 14px 14px 38px;
   border-radius: 12px;
   background: rgb(255 253 247 / 70%);
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
+
+#activity-terms li { padding-left: 4px; }
+#activity-terms li::marker { color: var(--forest); font-weight: 900; }
 
 .terms-acceptance {
   display: flex;

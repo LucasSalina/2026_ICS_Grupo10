@@ -165,7 +165,7 @@ def test_formulario_presenta_los_datos_de_la_actividad_elegida(client: Client) -
     contenido = respuesta.content.decode()
     assert "Inscripción a Tirolesa." in contenido
     assert "Términos y condiciones de Tirolesa" in contenido
-    assert "utilizá la talla de vestimenta declarada" in contenido
+    assert "informar su edad y talla de vestimenta" in contenido
     assert 'name="participante_1_talle"' in contenido
 
 
