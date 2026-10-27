@@ -135,7 +135,7 @@
       const campos = [...paso.querySelectorAll("input, select")].filter(
         (campo) => !campo.disabled && campo.type !== "button",
       );
-      const completo = campos.length > 0 && campos.every((campo) => campo.checkValidity());
+      const completo = campos.length > 0 && campos.every((campo) => campo.validity.valid);
       paso.classList.toggle("is-complete", completo);
     });
     const primeroPendiente = pasos.findIndex((paso) => !paso.classList.contains("is-complete"));
@@ -161,6 +161,40 @@
   document.querySelectorAll('input[name="horario"]').forEach((turno) => {
     turno.addEventListener("change", () => mostrarParticipantes());
   });
+  // El navegador marca en rojo el correo inválido; este texto explica por qué.
+  const correo = document.querySelector("#correo");
+  const errorCorreo = document.querySelector("#correo-error");
+  let correoRevisado = false;
+
+  function revisarCorreo() {
+    const mensaje = correo.validity.valueMissing
+      ? "Ingresá un correo para recibir el pase."
+      : correo.validity.typeMismatch
+        ? "El correo está incompleto. Revisalo, por ejemplo: nombre@correo.com."
+        : "";
+    errorCorreo.textContent = mensaje;
+    errorCorreo.hidden = !mensaje;
+    if (mensaje) {
+      correo.setAttribute("aria-invalid", "true");
+      correo.setAttribute("aria-describedby", "correo-error");
+    } else {
+      correo.removeAttribute("aria-invalid");
+      correo.removeAttribute("aria-describedby");
+    }
+  }
+
+  correo.addEventListener("blur", () => {
+    correoRevisado = true;
+    revisarCorreo();
+  });
+  correo.addEventListener("input", () => {
+    if (correoRevisado) revisarCorreo();
+  });
+  correo.addEventListener("invalid", () => {
+    correoRevisado = true;
+    revisarCorreo();
+  });
+
   formulario.addEventListener("input", marcarPasos);
   formulario.addEventListener("change", marcarPasos);
   tarjetas.forEach((tarjeta) => {

@@ -354,6 +354,7 @@
 
 .registration-field input:user-invalid,
 .registration-field select:user-invalid { border-color: var(--red); background-color: #fdf3f1; }
+.registration-field .field-error { color: #9b3034; font-weight: 700; }
 
 /* Participantes */
 
