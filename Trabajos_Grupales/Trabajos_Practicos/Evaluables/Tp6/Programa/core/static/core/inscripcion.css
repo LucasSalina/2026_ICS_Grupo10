@@ -343,6 +343,92 @@
 
 .registration-field input::placeholder { color: #6b7461; }
 
+/* Talle: remera a la izquierda y, donde el navegador lo permite, una grilla de talles. */
+
+.field-size select {
+  padding-left: 44px;
+  font-weight: 700;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a7c957' stroke='%23213e2b' stroke-width='1.6' stroke-linejoin='round'%3E%3Cpath d='M8.5 3.5 4 5.8 2.5 10l3 1.3V20.5h13V11.3l3-1.3L20 5.8l-4.5-2.3c-.6 1.6-2 2.5-3.5 2.5s-2.9-.9-3.5-2.5Z'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23386641' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-position: left 13px center, right 12px center;
+  background-size: 22px, 18px;
+}
+
+.field-size select:has(option[value=""]:checked) { color: #6b7461; font-weight: 400; }
+
+@supports (appearance: base-select) {
+  .field-size select,
+  .field-size select::picker(select) { appearance: base-select; }
+
+  .field-size select {
+    display: flex;
+    align-items: center;
+    background-size: 22px, 0;
+    cursor: pointer;
+  }
+
+  .field-size select::picker-icon {
+    content: "";
+    width: 18px;
+    height: 18px;
+    margin-right: -26px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23386641' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / 18px no-repeat;
+    transition: rotate .25s var(--ease-out);
+  }
+
+  .field-size select:open::picker-icon { rotate: 180deg; }
+
+  .field-size select::picker(select) {
+    margin-top: 6px;
+    padding: 10px;
+    border: 1.5px solid var(--field-line);
+    border-radius: 16px;
+    background: var(--card) var(--curvas-de-nivel);
+    box-shadow: var(--shadow-card), 0 18px 34px -18px rgb(33 62 43 / 40%);
+    opacity: 0;
+    translate: 0 -6px;
+    transition: opacity .2s, translate .25s var(--ease-out), overlay .25s allow-discrete, display .25s allow-discrete;
+  }
+
+  .field-size select:open::picker(select) { opacity: 1; translate: 0 0; }
+
+  @starting-style {
+    .field-size select:open::picker(select) { opacity: 0; translate: 0 -6px; }
+  }
+
+  .field-size option {
+    justify-content: center;
+    min-height: 48px;
+    border: 1.5px solid var(--soft-line);
+    border-radius: 12px;
+    background: var(--field);
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 900;
+    transition: background .15s, border-color .15s, transform .15s var(--ease-out);
+  }
+
+  .field-size option[value=""] { display: none; }
+  .field-size option::checkmark { display: none; }
+  .field-size option:hover,
+  .field-size option:focus-visible { border-color: var(--forest); outline: none; transform: translateY(-1px); }
+  .field-size option:checked { border-color: var(--forest); background: var(--forest); color: var(--paper); }
+
+  .field-size select:open::picker(select) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field-size select::picker(select),
+  .field-size select::picker-icon,
+  .field-size option { transition: none; }
+}
+
+
 .registration-field input:focus,
 .registration-field select:focus,
 .stepper input:focus {
