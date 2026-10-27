@@ -187,6 +187,7 @@ def _resumen_de_inscripcion(inscripcion: Inscripcion) -> str:
     """Describe el turno y los participantes de la inscripción, uno por línea."""
     horario = inscripcion.horario
     lineas = [
+        f"Inscripción N.º {inscripcion.pk:06d}",
         f"{horario.actividad} · {horario.fecha:%d/%m/%Y} · {horario.hora:%H:%M}",
         *(
             f"{participante.nombre} · DNI {participante.dni}"
