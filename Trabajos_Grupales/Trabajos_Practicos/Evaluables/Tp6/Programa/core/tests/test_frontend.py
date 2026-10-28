@@ -13,7 +13,7 @@ from django.utils import timezone
 from pytest_django.fixtures import Settings
 
 from core.models import Actividad, Horario, Inscripcion
-from core.qr import GenerarQr
+from core.qr import GeneradorQr
 
 URL_FORMULARIO_TIROLESA = "/inscripcion/?actividad=tirolesa&fecha=2026-10-20"
 
@@ -467,7 +467,7 @@ def test_correo_de_confirmacion_incluye_el_qr_de_la_inscripcion(
         for parte in mensaje_enviado.walk()
         if parte.get_content_type() == "image/png"
     ]
-    qr_esperado = GenerarQr().generar(
+    qr_esperado = GeneradorQr().generar(
         f"EcoHarmony-Inscripcion-{Inscripcion.objects.get().pk}"
     )
     assert imagenes == [qr_esperado]
@@ -501,7 +501,7 @@ def test_confirmacion_muestra_el_qr_de_la_inscripcion(
         URL_FORMULARIO_TIROLESA, datos_de_inscripcion(horario_tirolesa)
     )
 
-    qr_esperado = GenerarQr().generar(
+    qr_esperado = GeneradorQr().generar(
         f"EcoHarmony-Inscripcion-{Inscripcion.objects.get().pk}"
     )
     imagen = base64.b64encode(qr_esperado).decode()

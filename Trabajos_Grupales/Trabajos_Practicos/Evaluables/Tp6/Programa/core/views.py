@@ -18,7 +18,7 @@ from core.inscripciones import (
     InscripcionSinParticipantesError,
 )
 from core.models import CUPO_MAXIMO_POR_ACTIVIDAD, Actividad, Horario, Inscripcion
-from core.qr import GenerarQr
+from core.qr import GeneradorQr
 from core.validacion_edad import EDADES_MINIMAS_POR_ACTIVIDAD, EdadInvalidaError
 
 logger = logging.getLogger(__name__)
@@ -222,7 +222,9 @@ def inscripcion(request: HttpRequest) -> HttpResponse:
             inscripcion_registrada = _registrar_envio(request.POST)
         except ValueError as rechazo:
             return _mostrar_formulario(request, error=str(rechazo))
-        qr = GenerarQr().generar(f"EcoHarmony-Inscripcion-{inscripcion_registrada.pk}")
+        qr = GeneradorQr().generar(
+            f"EcoHarmony-Inscripcion-{inscripcion_registrada.pk}"
+        )
         correo_enviado = _enviar_confirmacion(inscripcion_registrada, qr)
         return render(
             request,
