@@ -1,3 +1,7 @@
+[lint]
+# Además de las reglas por defecto, exige el orden de los imports (isort).
+extend-select = ["I"]
+
 [lint.per-file-ignores]
 # Las migraciones las genera Django con listas como atributos de clase.
 "core/migrations/*.py" = ["RUF012"]
