@@ -23,6 +23,7 @@ class Command(BaseCommand):
     help = "Carga horarios de muestra para los siete días abiertos desde hoy."
 
     def handle(self, *args: Any, **options: Any) -> None:
+        """Crea los turnos de cada actividad sin duplicar los existentes."""
         call_command("cargar_actividades")
         actividades = Actividad.objects.all()
         fecha = timezone.localdate()
