@@ -5,7 +5,7 @@ from core.qr import GenerarQr
 
 def test_generacion_qr_es_imagen() -> None:
     """Genera el QR como una imagen PNG en bytes."""
-    resultado = GenerarQr().generate("test")
+    resultado = GenerarQr().generar("test")
 
     # Todo archivo PNG comienza con esta firma.
     assert isinstance(resultado, bytes)

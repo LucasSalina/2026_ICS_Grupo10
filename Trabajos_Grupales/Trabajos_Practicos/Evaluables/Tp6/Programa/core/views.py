@@ -222,7 +222,7 @@ def inscripcion(request: HttpRequest) -> HttpResponse:
             inscripcion_registrada = _registrar_envio(request.POST)
         except ValueError as rechazo:
             return _mostrar_formulario(request, error=str(rechazo))
-        qr = GenerarQr().generate(f"EcoHarmony-Inscripcion-{inscripcion_registrada.pk}")
+        qr = GenerarQr().generar(f"EcoHarmony-Inscripcion-{inscripcion_registrada.pk}")
         correo_enviado = _enviar_confirmacion(inscripcion_registrada, qr)
         return render(
             request,

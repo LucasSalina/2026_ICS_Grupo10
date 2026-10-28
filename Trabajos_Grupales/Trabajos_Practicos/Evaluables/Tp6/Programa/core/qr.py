@@ -12,7 +12,7 @@ class GenerarQr:
         self.scale = scale
         self.error = error
 
-    def generate(self, data: str) -> bytes:
+    def generar(self, data: str) -> bytes:
         """Devuelve los bytes PNG del código QR que codifica el texto."""
         qr = segno.make(data, error=self.error)
         buffer = io.BytesIO()
